@@ -27,17 +27,9 @@ public class UpperRules extends Game{
 		}
 	}
 	
-	public int getRoundUpperScore() {
-		int roundScore = 0;
+	public int TotalUpperScore () {
 		for (int i : scoreArray)
-			roundScore += i;
-		
-		upperScore += roundScore;
-		
-		return roundScore;
-	}
-	
-	public int getFinalUpperScore () {
+			upperScore += i;
 		if (upperScore >= 63)
 			return (upperScore + 35);
 		else
