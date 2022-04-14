@@ -2,43 +2,23 @@
 public class Rules{
 	
 	private int[] diceArray = new int[5];
-	public int[] scoreArray = new int[6];
-	private int diceValue, yahtzeeCount, upperScore;
+	private int diceValue, yahtzeeCount;
 	
 	public Rules(){
-		
-		//Will get dice info from game implementation
-		upperScore = 0;
-		for (int i : scoreArray)
-			i = 0;
 		diceValue = 0;	//used in full house, three and four of a kind
 		yahtzeeCount = 0;
 	}
 
-	public void CreateUpperScoreArray() {
-		for (int i : diceArray) {
-			if (i == 1) 
-				scoreArray[i] += 1;
-			else if (i == 2)
-				scoreArray[i] += 2;
-			else if (i == 3)
-				scoreArray[i] += 3;
-			else if (i == 4)
-				scoreArray[i] += 4;
-			else if (i == 5)
-				scoreArray[i] += 5;
-			else if (i == 6)
-				scoreArray[i] += 6;
-		}
+	public bool SetDice(int[] dice){
+		//Will get dice info from game implementation
 	}
 
 	public int TotalUpperScore () {
-		for (int i : scoreArray)
+		int upperScore = 0;
+
+		for (int i : diceArray) {
 			upperScore += i;
-		if (upperScore >= 63)
-			return (upperScore + 35);
-		else
-			return upperScore;
+		}
 	}
 
 	public void Sort(int[] arr) { //used for large and small straight
