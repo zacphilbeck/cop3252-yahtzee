@@ -125,19 +125,19 @@ class Player
 		fourofakind = a;
 	}
 
-	public void setFullhouse()
+	public void setFullhouse(int a)
 	{
-		fullhouse = 25;
+		fullhouse = a;
 	}
 	
-        public void setSMStraight()
+        public void setSMStraight(int a)
 	{
-		SMStraight = 30;
+		SMStraight = a;
 	}
 
-        public void setLGStraight()
+        public void setLGStraight(int a)
 	{
-		LGStraight = 40;
+		LGStraight = a;
 	}
 
         public void setYahtzee()

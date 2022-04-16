@@ -1,27 +1,30 @@
 
-public class Rules{
+class Rules{
 	
 	private int[] diceArray = new int[5];
-	private int diceValue, yahtzeeCount;
+	private int diceValue;
 	
 	public Rules(){
 		diceValue = 0;	//used in full house, three and four of a kind
-		yahtzeeCount = 0;
 	}
 
-	public bool SetDice(int[] dice){
-		//Will get dice info from game implementation
-	}
-
-	public int TotalUpperScore () {
-		int upperScore = 0;
-
-		for (int i : diceArray) {
-			upperScore += i;
+	public void SetDice(int[] dice){
+		for (int i = 0; i < 5; i++) {
+			diceArray[i] = dice[i];
 		}
 	}
+	
+	public int UpperRulesReturns(int x) {
+		int upperRules = 0;
+		for (int i : diceArray) {
+			if (i == x) 
+				upperRules += i;	
+		}
+		
+		return upperRules;
+	}
 
-	public void Sort(int[] arr) { //used for large and small straight
+	private void Sort(int[] arr) { //used for large and small straight
 		int min = 0, temp = 0;
 		
 		for(int i = 0; i < 4; i++) {
@@ -141,20 +144,13 @@ public class Rules{
 				count++;
 		}
 		if(count == 5) {
-			yahtzeeCount++;
 			return 50;
 		}
 		return 0;
 	}
 	
-	public int YahtzeeBonus() {
-		
-		return yahtzeeCount;
-	}
 	
-	public int TotalLowerScore() {
-		
-		return Chance() + ThreeOfAKind() + FourOfAKind() + FullHouse()
-						+SmallStraight() +LargeStraight() + Yahtzee();
+	public void clearDiceVal() {
+		diceValue = 0;
 	}
 }
