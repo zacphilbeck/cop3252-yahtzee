@@ -22,6 +22,7 @@ import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.BoxLayout;
+import javax.swing.JTextArea
 
 public class YahtzeeGame extends JFrame
 {
@@ -643,6 +644,7 @@ public class YahtzeeGame extends JFrame
                 twoplayerJButton = new JButton("2");
                 threeplayerJButton = new JButton("3");
                 fourplayerJButton = new JButton("4");
+		JButton rulesButton = new JButton("Yahtzee Rules");
 
                 introductionPanel = new JPanel();
                 setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
@@ -651,12 +653,14 @@ public class YahtzeeGame extends JFrame
                 introductionPanel.setBorder(BorderFactory.createLineBorder(Color.black)); 
                 getContentPane().setBackground(Color.GREEN);
 
-                introductionPanel.setLayout(new GridLayout(4,0,0,0));
+                introductionPanel.setLayout(new GridLayout(5,0,0,0));
                 numberofplayers.setPreferredSize(new Dimension(300,55));
 		introductionPanel.add(numberofplayers);
                 introductionPanel.add(twoplayerJButton);            
                 introductionPanel.add(threeplayerJButton);
                 introductionPanel.add(fourplayerJButton);
+		introductionPanel.add(rulesButton);
+
 
                 twoplayerJButton.addActionListener( 
                    new ActionListener()
@@ -687,10 +691,30 @@ public class YahtzeeGame extends JFrame
                         }
                    }
                 );
+		
+		rulesButton.addActionListener(
+                	new ActionListener()
+                	{
+                		public void actionPerformed(ActionEvent e)
+                		{
+                			OpenRulesPanel();
+                		}
+                	});
 
 		add(introductionPanel);
                 setVisible(true);
 	}
+	
+	private void OpenRulesPanel() {
+    		JTextArea rulesText = new JTextArea(6,20);
+    		String rules = "Our game implements standard Yahtzee rules\n"
+    			+ "without the JOker options. The special feature of our game\n"
+    			+ "is, you can have a fourth roll with but with a penalty of\n"
+    			+ "15 points.";
+    		rulesText.setText(rules);
+    		JOptionPane.showMessageDialog(null, rules);
+    	
+    	}
 
 	private class ButtonClick implements ActionListener //REPLACE THIS CODE TO ADD NUMBER 
 	{						    //ON BUTTON CLICKED TO USER SCORE
