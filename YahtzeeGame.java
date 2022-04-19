@@ -187,7 +187,11 @@ public class YahtzeeGame extends JFrame
 	private Player player2;
 	private Player player3;
 	private Player player4;
-
+	
+	private boolean[] selectionArr = new boolean[5];
+	public JButton[] diceButton = new JButton[5];
+	private int[] diceArray = new int[5];
+	
 	public void MakeScoreCard()
 	{
 		blanklabel = new JLabel("");
@@ -635,9 +639,87 @@ public class YahtzeeGame extends JFrame
 		yahtzeeJButton.addActionListener(handler);
 		add(display2Panel);
 		setVisible(true);
+		
+		DicePanel();
+		JButton exit = new JButton("exit");
+		exit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.exit(1);
+			}
+		});
+		add(exit);
 	}
-
-
+	
+	public void RollDice() {
+		
+		Random r = new Random();
+		for(int i = 0; i < 5; i++) 
+			diceArray[i] = r.nextInt(1, 7);
+		
+		for(int i = 0; i < 5; i++) {
+			
+			if(selectionArr[i] == false) {
+				diceButton[i].setText((Integer.toString(diceArray[i])));
+			}
+		}
+	}
+	
+	public void SelectDice(int i) {
+		//selects and deselects dice.
+		if(diceButton[i].isSelected()) {
+			selectionArr[i] = false;
+			diceButton[i].setSelected(false);
+		}
+		else{
+			selectionArr[i] = true;
+			diceButton[i].setSelected(true);
+		}
+			
+		if(diceButton[i].isSelected()) {
+			diceButton[i].setBackground(Color.YELLOW);
+			diceButton[i].setOpaque(true);
+		}
+		else
+			diceButton[i].setBackground(null);
+	}
+	
+	
+	public void DicePanel() {
+		
+		JPanel dicePanel = new JPanel();
+		dicePanel.setLayout(new GridLayout(0,5,1,0));
+		dicePanel.setBackground(Color.GREEN);
+		
+		JButton rollButton = new JButton("Roll");
+		
+		
+		for(int i = 0; i < 5; i++) {
+			diceButton[i] = new JButton();
+			diceButton[i].setPreferredSize(new Dimension(60, 60));
+			dicePanel.add(diceButton[i]);
+		}
+		
+		dicePanel.add(rollButton);
+		add(dicePanel);
+		
+		
+		rollButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				RollDice();
+			}
+		});
+		
+		for(int i = 0; i < 5; i++) {
+			final int a = i;
+			diceButton[i].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					SelectDice(a);
+				}
+			});
+		}
+		
+	}	
+	
         public void StartDisplay()
         {                		
                 numberofplayers = new JLabel("Select amount of players", JLabel.CENTER);
