@@ -22,7 +22,8 @@ import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.BoxLayout;
-import javax.swing.JTextArea
+import javax.swing.JTextArea;
+import java.util.Random;
 
 public class YahtzeeGame extends JFrame
 {
