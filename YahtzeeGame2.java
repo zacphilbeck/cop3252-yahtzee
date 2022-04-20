@@ -631,7 +631,7 @@ public class YahtzeeGame extends JFrame
 			p1turn = true;
 		}
 
-		turnnumber++;
+		//turnnumber++;
 		if(turnnumber == 13) {
 			WinnerDisplay();
 		}
@@ -1466,8 +1466,7 @@ public class YahtzeeGame extends JFrame
          chance = Chance();
          grandTotal = Total();
         ScoreOptions(ones,twos,threes,fours,fives,sixes,threeofkind,fourofkind,fullhouse,smstraight,lgstraight,chance,yahtzee);
-        if(turnnumber == 2) {
-        	WinnerDisplay();
+       
         }
         //System.out.println("total = " + grandTotal);
 	}
