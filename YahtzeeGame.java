@@ -1,3 +1,5 @@
+
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.Dimension;
@@ -25,6 +27,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JTextArea;
 import java.util.Random;
 
+@SuppressWarnings("serial")
 public class YahtzeeGame extends JFrame
 {
   //      private int[] diceArray;
@@ -33,7 +36,7 @@ public class YahtzeeGame extends JFrame
 	private int twoplayerturns = 26;
 	private int threeplayerturns = 39;
 	private int fourplayerturns = 52;
-	private int turnnumber = 1;
+	private int turnnumber = 0;
 
 	private boolean p1turn = true;
 	private boolean p2turn = false;
@@ -55,6 +58,7 @@ public class YahtzeeGame extends JFrame
 	private int lgstraight;
 	private int yahtzee;
 	private int chance;
+	private int grandTotal;
 
 	private JPanel introductionPanel;
 	private JPanel displayPanel;
@@ -212,10 +216,14 @@ public class YahtzeeGame extends JFrame
 	private boolean[] selectionArr = new boolean[5];
 	public JButton[] diceButton = new JButton[5];
 	private int[] diceArray = new int[6];
+	private JButton rollButton = new JButton("Roll");
+	private int rolls = 0;
 	
 	public void MakeScoreCard()
 	{
-//		diceArray = new int[5];
+		
+		AddDicePanel();//////////////////
+		DiceFunctionality();///////////////////
 		blanklabel = new JLabel("");
 		firstlabel = new JLabel("Ones", JLabel.CENTER);
 		secondlabel = new JLabel("Twos", JLabel.CENTER);
@@ -246,8 +254,8 @@ public class YahtzeeGame extends JFrame
                 fullhouselabel2 = new JLabel("Full house", JLabel.CENTER);
                 SMStraightlabel2 = new JLabel("SM straight", JLabel.CENTER);
                 LGStraightlabel2 = new JLabel("LG straight", JLabel.CENTER);
-                chancelabel2 = new JLabel("Chance", JLabel.CENTER);
-                yahtzeelabel2 = new JLabel("Yahtzee", JLabel.CENTER);
+                chancelabel2 = new JLabel("Yahtzee", JLabel.CENTER);
+                yahtzeelabel2 = new JLabel("Chance", JLabel.CENTER);
 
 		player1label = new JLabel("Player 1", JLabel.CENTER);
 	       	player1ones = new JLabel("", JLabel.CENTER);
@@ -441,7 +449,7 @@ public class YahtzeeGame extends JFrame
 		
 		JLabel hello = new JLabel("");
 		displayblank1Panel.setLayout(new GridLayout(0,1,0,0));
-		displayblank1Panel.setBackground(Color.lightGray);
+		displayblank1Panel.setBackground(Color.GREEN);
 		hello.setPreferredSize(new Dimension(20,20));
 		displayblank1Panel.add(hello);
 		add(displayblank1Panel);
@@ -467,6 +475,7 @@ public class YahtzeeGame extends JFrame
                 displayPanel.add(LGStraightlabel);
 		displayPanel.add(chancelabel);		
                 displayPanel.add(yahtzeelabel);
+                //displayPanel.add(chancelabel);	
 		displayPanel.add(grandtotallabel);
 		add(displayPanel);
 	
@@ -576,7 +585,7 @@ public class YahtzeeGame extends JFrame
                 blankdisplaypanel3 = new JPanel();
                 JLabel blank3 = new JLabel("");
                 blankdisplaypanel3.setLayout(new GridLayout(0,1,0,0));
-                blankdisplaypanel3.setBackground(Color.lightGray);
+                blankdisplaypanel3.setBackground(Color.GREEN);
                 blank3.setPreferredSize(new Dimension(20,20));
                 blankdisplaypanel3.add(blank3);
                 add(blankdisplaypanel3);
@@ -622,7 +631,26 @@ public class YahtzeeGame extends JFrame
 			p1turn = true;
 		}
 
-		turnnumber++;
+		//turnnumber++;
+		System.out.println("turn =" + turnnumber);
+
+		if( playernumber == 2) {
+			if(turnnumber == 26)
+			{
+				WinnerDisplay();
+			}
+		}
+		else if(playernumber == 3) {
+			if(turnnumber == 39)
+				WinnerDisplay();
+		}
+		else {
+			if(turnnumber == 52) {
+				WinnerDisplay();
+			}
+		}
+		
+		rolls = 0;//////////////////////////
 		PlayRound();
 
 	}
@@ -640,10 +668,11 @@ public class YahtzeeGame extends JFrame
 
 	public void NumberChoosing()
 	{
+		//player1grandtotal.setText(Integer.toString(Total()));
 		displayblank2Panel = new JPanel();
                 JLabel hello2 = new JLabel("");
                 displayblank2Panel.setLayout(new GridLayout(0,1,0,0));
-                displayblank2Panel.setBackground(Color.lightGray);
+                displayblank2Panel.setBackground(Color.GREEN);
                 hello2.setPreferredSize(new Dimension(20,20));
                 displayblank2Panel.add(hello2);
                 add(displayblank2Panel);
@@ -805,11 +834,13 @@ public class YahtzeeGame extends JFrame
 				{	
 					player1ones.setText("" + number1);
 					player1.setAces(number1);
+					player1.setTotal(number1);
 				}	
 				else if(p2turn == true)
 				{
 					player2ones.setText("" + number1);	
                                         player2.setAces(number1);
+                                        player2.setTotal(number1);
 
 				}
 
@@ -817,12 +848,14 @@ public class YahtzeeGame extends JFrame
 				{
 					player3ones.setText("" + number1);
                                         player3.setAces(number1);
+                                        player3.setTotal(number1);
 
 				}
 				else if(p4turn == true)
 				{
 					player4ones.setText("" + number1);
                                         player4.setAces(number1);
+                                        player4.setTotal(number1);
 
 				}
 
@@ -830,6 +863,7 @@ public class YahtzeeGame extends JFrame
 				remove(displayblank2Panel);
                                 remove(displayplayerPanel);
 				turnnumber++;
+				 //ScoreOptions(ones,twos,threes,fours,fives,sixes,threeofkind,fourofkind,fullhouse,smstraight,lgstraight,yahtzee,chance);
 				UpdatePlayerTurn();
 			}
 		});
@@ -842,24 +876,28 @@ public class YahtzeeGame extends JFrame
 				{
                                         player1twos.setText("" + number1);
                                         player1.setTwos(number1);
+                                        player1.setTotal(number1);
 
 				}
                                 else if(p2turn == true)
 				{
                                         player2twos.setText("" + number1);
                                         player2.setTwos(number1);
+                                        player2.setTotal(number1);
 
 				}
                                 else if(p3turn == true)
 				{
                                         player3twos.setText("" + number1);
                                         player3.setTwos(number1);
+                                        player3.setTotal(number1);
 
 				}
                                 else if(p4turn == true)
 				{
                                         player4twos.setText("" + number1);
                                         player4.setTwos(number1);
+                                        player4.setTotal(number1);
 
 				}
                                 remove(display2Panel);
@@ -879,24 +917,28 @@ public class YahtzeeGame extends JFrame
 				{
                                         player1threes.setText("" + number1);
                                         player1.setThrees(number1);
+                                        player1.setTotal(number1);
 
 				}
                                 else if(p2turn == true)
 				{
                                         player2threes.setText("" + number1);
                                         player2.setThrees(number1);
+                                        player2.setTotal(number1);
 
 				}
                                 else if(p3turn == true)
 				{
                                         player3threes.setText("" + number1);
                                         player3.setThrees(number1);
+                                        player3.setTotal(number1);
 
 				}
                                 else if(p4turn == true)
 				{
                                         player4threes.setText("" + number1);
                                         player4.setThrees(number1);
+                                        player4.setTotal(number1);
 
 				}
                                 remove(display2Panel);
@@ -919,6 +961,7 @@ public class YahtzeeGame extends JFrame
 //                                        UpdatePlayerTurn();              
                                   //      PlayRound();
                                         player1.setFours(number1);
+                                        player1.setTotal(number1);
      
                                 }
 				else if(p2turn == true)
@@ -926,21 +969,24 @@ public class YahtzeeGame extends JFrame
 				        player2fours.setText("" + number1);
  //                                       UpdatePlayerTurn();              
                                  //       PlayRound(); 
-                                        player2.setFours(number1);     
+                                        player2.setFours(number1);   
+                                        player2.setTotal(number1);
                                 }
 				else if(p3turn == true)
                         	{        
 				        player3fours.setText("" + number1);
    //                                     UpdatePlayerTurn();              
                                 //        PlayRound(); 
-                                        player3.setFours(number1);     
+                                        player3.setFours(number1);
+                                        player3.setTotal(number1);
                                 }
 				else if(p4turn == true)
 				{
                                         player4fours.setText("" + number1);
      //                                   UpdatePlayerTurn();              
                                       //  PlayRound(); 
-                                        player4.setFours(number1);     
+                                        player4.setFours(number1); 
+                                        player4.setTotal(number1);
 				}
 
                                 remove(display2Panel);
@@ -962,7 +1008,8 @@ public class YahtzeeGame extends JFrame
                                         player1fives.setText("" + number1);
 //                                        UpdatePlayerTurn();              
                                     //    PlayRound();     
-                                        player1.setFives(number1); 
+                                        player1.setFives(number1);
+                                        player1.setTotal(number1);
 				}
                                 else if(p2turn == true)
 				{
@@ -970,6 +1017,7 @@ public class YahtzeeGame extends JFrame
   //                                      UpdatePlayerTurn();              
                                   //      PlayRound();  
                                         player2.setFives(number1); 
+                                        player2.setTotal(number1);
    
 				}
                                 else if(p3turn == true)
@@ -978,6 +1026,7 @@ public class YahtzeeGame extends JFrame
     //                                    UpdatePlayerTurn();              
                                  //       PlayRound();
                                         player3.setFives(number1); 
+                                        player3.setTotal(number1);
      
 				}
                                 else if(p4turn == true)
@@ -987,6 +1036,7 @@ public class YahtzeeGame extends JFrame
                                 //        PlayRound();
                                         player4.setFives(number1); 
      
+                                        player4.setTotal(number1);
 				}
 	//			display2Panel.setVisible(false);
         //                	PlayRound();
@@ -1010,6 +1060,7 @@ public class YahtzeeGame extends JFrame
  //                                       UpdatePlayerTurn();              
                                      //   PlayRound();
                                         player1.setSixes(number1); 
+                                        player1.setTotal(number1);
      
 				}
                                 else if(p2turn == true)
@@ -1018,6 +1069,7 @@ public class YahtzeeGame extends JFrame
    //                                     UpdatePlayerTurn();              
                                      //   PlayRound();  
                                         player2.setSixes(number1);
+                                        player2.setTotal(number1);
    
                                 }
 				else if(p3turn == true)
@@ -1026,6 +1078,7 @@ public class YahtzeeGame extends JFrame
      //                                   UpdatePlayerTurn();              
                                    //     PlayRound();
                                         player3.setSixes(number1);
+                                        player3.setTotal(number1);
      
                                 }
 				else if(p4turn == true)
@@ -1034,6 +1087,7 @@ public class YahtzeeGame extends JFrame
        //                                 UpdatePlayerTurn();              
                                  //       PlayRound(); 
                                         player4.setSixes(number1);
+                                        player4.setTotal(number1);
     
 				}
 
@@ -1058,6 +1112,7 @@ public class YahtzeeGame extends JFrame
         //                                UpdatePlayerTurn();              
                                 //        PlayRound();
                                         player1.setThreeofakind(number1);
+                                        player1.setTotal(number1);
      
                                	}
 				else if(p2turn == true)
@@ -1065,6 +1120,7 @@ public class YahtzeeGame extends JFrame
        				 player2threeofkind.setText("" + number1);
       //                                  UpdatePlayerTurn();           
                                         player2.setThreeofakind(number1);
+                                        player2.setTotal(number1);
    
                                 }
 				else if(p3turn == true)
@@ -1072,6 +1128,7 @@ public class YahtzeeGame extends JFrame
 				        player3threeofkind.setText("" + number1);
     //                                    UpdatePlayerTurn();
                                         player3.setThreeofakind(number1);
+                                        player3.setTotal(number1);
               
 				}                               	
 				else if(p4turn == true)
@@ -1079,6 +1136,7 @@ public class YahtzeeGame extends JFrame
 	        			player4threeofkind.setText("" + number1);
   //                                      UpdatePlayerTurn();
                                         player4.setThreeofakind(number1);
+                                        player4.setTotal(number1);
                   			
 				}
 //				display2Panel.setVisible(false);
@@ -1102,6 +1160,7 @@ public class YahtzeeGame extends JFrame
                                         player1fourofkind.setText("" + number1);
 //                                        UpdatePlayerTurn();
                                         player1.setFourofakind(number1);
+                                        player1.setTotal(number1);
               
 				}
                                 else if(p2turn == true)
@@ -1109,6 +1168,7 @@ public class YahtzeeGame extends JFrame
                                         player2fourofkind.setText("" + number1);
   //                                      UpdatePlayerTurn();              
                                         player2.setFourofakind(number1); 
+                                        player2.setTotal(number1);
 
 				}
                                 else if(p3turn == true)
@@ -1116,6 +1176,7 @@ public class YahtzeeGame extends JFrame
                                         player3fourofkind.setText("" + number1);
     //                                    UpdatePlayerTurn();
                                         player3.setFourofakind(number1); 
+                                        player3.setTotal(number1);
              
 				}
                                 else if(p4turn == true)
@@ -1123,6 +1184,7 @@ public class YahtzeeGame extends JFrame
                                         player4fourofkind.setText("" + number1);
       //                                  UpdatePlayerTurn(); 
                                         player4.setFourofakind(number1); 
+                                        player4.setTotal(number1);
                   
 				}
 	//			display2Panel.setVisible(false);
@@ -1146,25 +1208,29 @@ public class YahtzeeGame extends JFrame
                                         player1fullhouse.setText("" + number1);
         //                                UpdatePlayerTurn();
                                         player1.setFullhouse(number1); 
+                                        player1.setTotal(number1);
               
 				}
                                 else if(p2turn == true)
 				{
                                         player2fullhouse.setText("" + number1);
           //                              UpdatePlayerTurn();          
-                                        player2.setFullhouse(number1);      
+                                        player2.setFullhouse(number1); 
+                                        player2.setTotal(number1);
 				}
                                 else if(p3turn == true)
 				{
                                         player3fullhouse.setText("" + number1);
             //                            UpdatePlayerTurn();
-                                        player3.setFullhouse(number1);                
+                                        player3.setFullhouse(number1);
+                                        player3.setTotal(number1);
 				}
                                 else if(p4turn == true)
 				{
                                         player4fullhouse.setText("" + number1);
               //                          UpdatePlayerTurn();
-                                        player4.setFullhouse(number1);                  
+                                        player4.setFullhouse(number1);   
+                                        player4.setTotal(number1);
 				}
 
 		//		display2Panel.setVisible(false);
@@ -1186,13 +1252,15 @@ public class YahtzeeGame extends JFrame
 				{
                                         player1SMStraight.setText("" + number1);
 //                                        UpdatePlayerTurn();
-                                        player1.setSMStraight(number1);                
+                                        player1.setSMStraight(number1);
+                                        player1.setTotal(number1);
 				}
                                 else if(p2turn == true)
 				{
                                         player2SMStraight.setText("" + number1);
   //                                      UpdatePlayerTurn();
-                                        player2.setSMStraight(number1); 
+                                        player2.setSMStraight(number1);
+                                        player2.setTotal(number1);
               
 				}
                                 else if(p3turn == true)
@@ -1200,6 +1268,7 @@ public class YahtzeeGame extends JFrame
                                         player3SMStraight.setText("" + number1);
     //                                    UpdatePlayerTurn();
                                         player3.setSMStraight(number1); 
+                                        player3.setTotal(number1);
              
 				}
                                 else if(p4turn == true)
@@ -1207,6 +1276,7 @@ public class YahtzeeGame extends JFrame
                                         player4SMStraight.setText("" + number1);
       //                                  UpdatePlayerTurn(); 
                                         player4.setSMStraight(number1); 
+                                        player4.setTotal(number1);
                  
 				}
 	//			display2Panel.setVisible(false);
@@ -1230,6 +1300,7 @@ public class YahtzeeGame extends JFrame
                                         player1LGStraight.setText("" + number1);
 //                                        UpdatePlayerTurn(); 
                                         player1.setLGStraight(number1); 
+                                        player1.setTotal(number1);
              
 				}
                                 else if(p2turn == true)
@@ -1237,6 +1308,7 @@ public class YahtzeeGame extends JFrame
                                         player2LGStraight.setText("" + number1);
   //                                      UpdatePlayerTurn(); 
                                         player2.setLGStraight(number1);
+                                        player2.setTotal(number1);
              
 				}
                                 else if(p3turn == true)
@@ -1244,6 +1316,7 @@ public class YahtzeeGame extends JFrame
                                         player3LGStraight.setText("" + number1);
     //                                    UpdatePlayerTurn(); 
                                         player3.setLGStraight(number1);
+                                        player3.setTotal(number1);
 
 				}
                                 else if(p4turn == true)
@@ -1251,6 +1324,7 @@ public class YahtzeeGame extends JFrame
                                         player4LGStraight.setText("" + number1);
       //                                  UpdatePlayerTurn();
                                         player4.setLGStraight(number1);
+                                        player4.setTotal(number1);
               
 				}
 	//			display2Panel.setVisible(false);
@@ -1274,6 +1348,7 @@ public class YahtzeeGame extends JFrame
                                         player1chance.setText("" + number1);
 //                                        UpdatePlayerTurn();
                                         player1.setChance(number1);
+                                        player1.setTotal(number1);
 
 				}
                                 else if(p2turn == true)
@@ -1281,6 +1356,7 @@ public class YahtzeeGame extends JFrame
                                         player2chance.setText("" + number1);
   //                                      UpdatePlayerTurn();
                                         player2.setChance(number1); 
+                                        player2.setTotal(number1);
 
 				}
                                 else if(p3turn == true)
@@ -1288,12 +1364,15 @@ public class YahtzeeGame extends JFrame
                                         player3chance.setText("" + number1);
     //                                    UpdatePlayerTurn();
                                         player3.setChance(number1); 
+                                        player3.setTotal(number1);
 				}
                                 else if(p4turn == true)
 				{
                                         player4chance.setText("" + number1);
       //                                  UpdatePlayerTurn();
-                                        player4.setChance(number1); 
+                                        player4.setChance(number1);
+                                        player4.setTotal(number1);
+                                        
 				}
 	//			display2Panel.setVisible(false);
 	//			PlayRound();
@@ -1316,12 +1395,14 @@ public class YahtzeeGame extends JFrame
                                         player1yahtzee.setText("" + number1);
 //                                        UpdatePlayerTurn();
                                         player1.setYahtzee(); 
+                                        player1.setTotal(number1);
 				}
                                 else if(p2turn == true)
 				{
                                         player2yahtzee.setText("" + number1);
   //                                      UpdatePlayerTurn();
                                         player2.setYahtzee();
+                                        player2.setTotal(number1);
 
 				}
                                 else if(p3turn == true)
@@ -1329,6 +1410,7 @@ public class YahtzeeGame extends JFrame
                                         player3yahtzee.setText("" + number1);
     //                                    UpdatePlayerTurn();
                                         player3.setYahtzee();
+                                        player3.setTotal(number1);
 
 				}
                                 else if(p4turn == true)
@@ -1336,6 +1418,7 @@ public class YahtzeeGame extends JFrame
                                         player4yahtzee.setText("" + number1);
       //                                  UpdatePlayerTurn();
                                         player4.setYahtzee();
+                                        player4.setTotal(number1);
 
 				}
 
@@ -1349,34 +1432,56 @@ public class YahtzeeGame extends JFrame
 
                         }
                 });
+               
+              
+               for(int i = 0; i < 5; i++) {
+          			
+      				if(selectionArr[i] == false) 
+      					diceButton[i].setText("0");
+      				
+          		}
 
 		display2Panel.setVisible(true);
 		
-/*
-		JButton exit = new JButton("exit");
-		exit.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				System.exit(1);
-			}
-		});
-		add(exit);
-*/		
+
 
 
 	}
 	
+	
 	public void RollDice() {
-		
+		final int turnCount = turnnumber;
 		Random r = new Random();
-		for(int i = 0; i < 5; i++) 
-			diceArray[i] = r.nextInt(1, 7);
+		if(rolls < 3) {
+			for(int i = 0; i < 5; i++) 
+				diceArray[i] = r.nextInt(1, 7);
 		
-		for(int i = 0; i < 5; i++) {
+			for(int i = 0; i < 5; i++) {
 			
-			if(selectionArr[i] == false) {
-				diceButton[i].setText((Integer.toString(diceArray[i])));
+				if(selectionArr[i] == false) {
+					diceButton[i].setText((Integer.toString(diceArray[i])));
+					
+				}
 			}
+			rolls++;
 		}
+	
+		 ones = UpperRulesReturns(1);
+         twos = UpperRulesReturns(2);
+         threes = UpperRulesReturns(3);
+         fours = UpperRulesReturns(4);
+         fives = UpperRulesReturns(5);
+         sixes = UpperRulesReturns(6);
+         threeofkind = ThreeOfAKind();
+         fourofkind = FourOfAKind();
+         fullhouse = FullHouse();
+         smstraight = SmallStraight();
+         lgstraight = LargeStraight();
+         yahtzee = Yahtzee();
+         chance = Chance();
+         grandTotal = Total();
+        ScoreOptions(ones,twos,threes,fours,fives,sixes,threeofkind,fourofkind,fullhouse,smstraight,lgstraight,chance,yahtzee);
+        
 	}
 	
 	public void SelectDice(int i) {
@@ -1396,6 +1501,42 @@ public class YahtzeeGame extends JFrame
 		}
 		else
 			diceButton[i].setBackground(null);
+	}
+	
+	public void AddDicePanel() {
+		JPanel dicePanel = new JPanel(); //code doesn't stop rolling after 4 tries
+		dicePanel.setLayout(new GridLayout(0,5,1,0));
+		dicePanel.setBackground(Color.lightGray);
+		
+		for(int i = 0; i < 5; i++) {
+			diceButton[i] = new JButton();
+			diceButton[i].setPreferredSize(new Dimension(60, 60));
+			dicePanel.add(diceButton[i]);
+		}
+		
+		dicePanel.add(rollButton);
+		add(dicePanel);
+	}
+	
+	
+	public void DiceFunctionality() {
+		System.out.println("here");
+		rollButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("here2");
+				RollDice();
+			}
+		});
+		
+		for(int i = 0; i < 5; i++) {
+			final int a = i;
+			diceButton[i].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("roll button");
+					SelectDice(a);
+				}
+			});
+		}
 	}
 	
 	
@@ -1424,63 +1565,73 @@ public class YahtzeeGame extends JFrame
                 add(displayplayerPanel);
 
 		
-/*
-		JPanel dicePanel = new JPanel(); //code doesn't stop rolling after 4 tries
-		dicePanel.setLayout(new GridLayout(0,5,1,0));
-		dicePanel.setBackground(Color.lightGray);
-		
-		JButton rollButton = new JButton("Roll");
-		
-		
-		for(int i = 0; i < 5; i++) {
-			diceButton[i] = new JButton();
-			diceButton[i].setPreferredSize(new Dimension(60, 60));
-			dicePanel.add(diceButton[i]);
-		}
-		
-		dicePanel.add(rollButton);
-		add(dicePanel);
-		
-		
-		rollButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				RollDice();
-			}
-		});
-		
-		for(int i = 0; i < 5; i++) {
-			final int a = i;
-			diceButton[i].addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					SelectDice(a);
-				}
-			});
-		}
-*/
-		diceArray[0] = 1; //dummy values for testing
-		diceArray[1] = 2;
-		diceArray[2] = 3;
-		diceArray[3] = 4;
-		diceArray[4] = 5;
-		diceArray[5] = 6;
+
 		NumberChoosing();             
 	}	
 	
+	public void WinnerDisplay() {
+		JFrame frame = new JFrame();
+		frame.setSize(400,400);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel winnerPanel = new JPanel();
+		JLabel winnerLabel = new JLabel();
+		frame.add(winnerPanel);
+		int[] arr = new int[4];
+		arr[0] = player1.getTotalscore();
+		arr[1] = player2.getTotalscore();
+		if(playernumber == 3 || playernumber == 4) {
+			arr[2] = player3.getTotalscore();
+		}
+		else {
+			arr[2] = -1;
+			arr[3] = -1;
+		}
+		if(playernumber == 4) {
+			arr[3] = player4.getTotalscore();
+		}
+		int temp = 0;
+		if(arr[0] > arr[1] && arr[0] > arr[2] && arr[0] > arr[3]) {
+			winnerLabel.setText("Player1 wins");
+		}
+		if(arr[1] > arr[0] && arr[1] > arr[2] && arr[1] > arr[3]) {
+			winnerLabel.setText("Player2 wins");
+		}
+		if(arr[2] > arr[1] && arr[2] > arr[0] && arr[2] > arr[3]) {
+			winnerLabel.setText("Player3 wins");
+		}
+		if(arr[3] > arr[1] && arr[3] > arr[2] && arr[3] > arr[0]) {
+			winnerLabel.setText("Player4 wins");
+		}
+		JButton exit = new JButton("exit");
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(1);
+			}
+		});
+		remove(displayPanel);
+		winnerLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+		winnerLabel.setPreferredSize(new Dimension(90, 50));
+		//winnerPanel.add(winnerLabel);
+		frame.add(winnerLabel);
+		//add(winnerLabel);
+		
+	}
 	
-        public void StartDisplay()
-        {                		
+    public void StartDisplay()
+    {                		
                 numberofplayers = new JLabel("Select amount of players", JLabel.CENTER);
                 twoplayerJButton = new JButton("2");
                 threeplayerJButton = new JButton("3");
                 fourplayerJButton = new JButton("4");
-		JButton rulesButton = new JButton("Yahtzee Rules");
+                JButton rulesButton = new JButton("Yahtzee Rules");
 
                 introductionPanel = new JPanel();
                 setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-                setSize(1920,1080);
+                setSize(1800,1800);
                 setResizable(false);                 
                 introductionPanel.setBorder(BorderFactory.createLineBorder(Color.black)); 
-                getContentPane().setBackground(Color.lightGray);
+                getContentPane().setBackground(Color.GREEN);
 
                 introductionPanel.setLayout(new GridLayout(5,0,0,0));
                 numberofplayers.setPreferredSize(new Dimension(300,55));
@@ -1897,6 +2048,12 @@ public class YahtzeeGame extends JFrame
 		return 0;
 	}
 	
+	public int Total() {
+		int total = ones + twos + threes + fours + fives + sixes + threeofkind + fourofkind
+				+ fullhouse + smstraight + lgstraight + yahtzee + chance;
+		return total;
+	}
+	
 	
 	public void clearDiceVal() {
 		diceValue = 0;
@@ -1905,13 +2062,14 @@ public class YahtzeeGame extends JFrame
 
         public YahtzeeGame()
         {
-                StartDisplay();
+               StartDisplay();
 //		DicePanel();
 //		NumberChoosing();
         }
 
 	public static void main(String args[])
 	{
+		
 		new YahtzeeGame();
 	}
 
