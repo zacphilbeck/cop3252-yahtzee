@@ -46,7 +46,7 @@ class Player
 		totalscore = upscorewithbonus + lowerscore;
 	}
 
-        public void setUpscoreprebonus()
+        public void setUpscoreprebonus(int a)
 	{
 		/*if(aces != -1)
 			upscoreprebonus = upscoreprebonus + aces;
