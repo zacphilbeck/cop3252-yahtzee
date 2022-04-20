@@ -1486,21 +1486,17 @@ public class YahtzeeGame extends JFrame
 	
 	public void SelectDice(int i) {
 		//selects and deselects dice.
-		if(diceButton[i].isSelected()) {
+		if(selectionArr[i] == true) {
 			selectionArr[i] = false;
-			diceButton[i].setSelected(false);
-		}
-		else{
-			selectionArr[i] = true;
-			diceButton[i].setSelected(true);
-		}
+			diceButton[i].setBackground(null);
+			diceButton[i].setOpaque(false);
 			
-		if(diceButton[i].isSelected()) {
+		}
+		else if(selectionArr[i] == false) {
+			selectionArr[i] = true;
 			diceButton[i].setBackground(Color.YELLOW);
 			diceButton[i].setOpaque(true);
 		}
-		else
-			diceButton[i].setBackground(null);
 	}
 	
 	public void AddDicePanel() {
