@@ -449,7 +449,7 @@ public class YahtzeeGame extends JFrame
 		
 		JLabel hello = new JLabel("");
 		displayblank1Panel.setLayout(new GridLayout(0,1,0,0));
-		displayblank1Panel.setBackground(Color.GREEN);
+		displayblank1Panel.setBackground(Color.lightGray);
 		hello.setPreferredSize(new Dimension(20,20));
 		displayblank1Panel.add(hello);
 		add(displayblank1Panel);
@@ -585,7 +585,7 @@ public class YahtzeeGame extends JFrame
                 blankdisplaypanel3 = new JPanel();
                 JLabel blank3 = new JLabel("");
                 blankdisplaypanel3.setLayout(new GridLayout(0,1,0,0));
-                blankdisplaypanel3.setBackground(Color.GREEN);
+                blankdisplaypanel3.setBackground(Color.lightGray);
                 blank3.setPreferredSize(new Dimension(20,20));
                 blankdisplaypanel3.add(blank3);
                 add(blankdisplaypanel3);
@@ -672,7 +672,7 @@ public class YahtzeeGame extends JFrame
 		displayblank2Panel = new JPanel();
                 JLabel hello2 = new JLabel("");
                 displayblank2Panel.setLayout(new GridLayout(0,1,0,0));
-                displayblank2Panel.setBackground(Color.GREEN);
+                displayblank2Panel.setBackground(Color.lightGray);
                 hello2.setPreferredSize(new Dimension(20,20));
                 displayblank2Panel.add(hello2);
                 add(displayblank2Panel);
@@ -1765,10 +1765,10 @@ public class YahtzeeGame extends JFrame
 
                 introductionPanel = new JPanel();
                 setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-                setSize(1800,1800);
+                setSize(1920,1080);
                 setResizable(false);                 
                 introductionPanel.setBorder(BorderFactory.createLineBorder(Color.black)); 
-                getContentPane().setBackground(Color.GREEN);
+                getContentPane().setBackground(Color.lightGray);
 
                 introductionPanel.setLayout(new GridLayout(5,0,0,0));
                 numberofplayers.setPreferredSize(new Dimension(300,55));
