@@ -28,7 +28,7 @@ import javax.swing.JTextArea;
 import java.util.Random;
 
 @SuppressWarnings("serial")
-public class YahtzeeGame extends JFrame
+public class YahtzeeGame2 extends JFrame
 {
   //      private int[] diceArray;
         private int diceValue;
@@ -1675,7 +1675,7 @@ public class YahtzeeGame extends JFrame
         	@Override
         	public void actionPerformed(ActionEvent event)
         	{
-                	JOptionPane.showMessageDialog(YahtzeeGame.this, String.format(
+                	JOptionPane.showMessageDialog(YahtzeeGame2.this, String.format(
                 	"You press: %s", event.getActionCommand()));
         	}
 	}
@@ -2033,7 +2033,7 @@ public class YahtzeeGame extends JFrame
 	}
 
 
-        public YahtzeeGame()
+        public YahtzeeGame2()
         {
                StartDisplay();
 //		DicePanel();
@@ -2043,7 +2043,7 @@ public class YahtzeeGame extends JFrame
 	public static void main(String args[])
 	{
 		
-		new YahtzeeGame();
+		new YahtzeeGame2();
 	}
 
 
