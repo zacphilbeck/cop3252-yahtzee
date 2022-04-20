@@ -1557,8 +1557,14 @@ public class YahtzeeGame extends JFrame
 	}	
 	
 	public void WinnerDisplay() {
+		JFrame frame = new JFrame();
+		frame.setSize(400,400);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		JPanel winnerPanel = new JPanel();
 		JLabel winnerLabel = new JLabel();
+		frame.add(winnerPanel);
 		int[] arr = new int[4];
 		arr[0] = player1.getTotalscore();
 		arr[1] = player2.getTotalscore();
@@ -1579,8 +1585,9 @@ public class YahtzeeGame extends JFrame
 		}
 		winnerLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		winnerLabel.setPreferredSize(new Dimension(90, 50));
-		winnerPanel.add(winnerLabel);
-		add(winnerLabel);
+		//winnerPanel.add(winnerLabel);
+		frame.add(winnerLabel);
+		//add(winnerLabel);
 		
 	}
 	
