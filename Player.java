@@ -48,7 +48,7 @@ class Player
 
         public void setUpscoreprebonus()
 	{
-		if(aces != -1)
+		/*if(aces != -1)
 			upscoreprebonus = upscoreprebonus + aces;
 		if(twos != -1)
 			upscoreprebonus = upscoreprebonus + twos;
@@ -59,7 +59,8 @@ class Player
 		if(fives != -1)
 			upscoreprebonus = upscoreprebonus + fives;
 		if(sixes != -1)
-			upscoreprebonus = upscoreprebonus + fives;
+			upscoreprebonus = upscoreprebonus + fives;*/
+		upscoreprebonus += a;
 	}
 
         public void setUpscorewithbonus() // only call when all rounds are complete
