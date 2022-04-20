@@ -156,6 +156,10 @@ class Player
 	{
 		chance = a;
 	}
+	
+	public void setTotal(int a) {
+    	  totalscore +=a;
+      	}
 
         public int getTotalscore()
 	{
