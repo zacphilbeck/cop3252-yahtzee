@@ -443,9 +443,9 @@ public class YahtzeeGame extends JFrame
 //		displayblank2Panel = new JPanel();
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
 
-		setSize(1800,1800);
+		setSize(1920,1080);
 		setResizable(false);
-		getContentPane().setBackground(Color.GREEN);
+		getContentPane().setBackground(Color.lightGray);
 		
 		JLabel hello = new JLabel("");
 		displayblank1Panel.setLayout(new GridLayout(0,1,0,0));
@@ -1493,7 +1493,7 @@ public class YahtzeeGame extends JFrame
 	public void AddDicePanel() {
 		JPanel dicePanel = new JPanel(); //code doesn't stop rolling after 4 tries
 		dicePanel.setLayout(new GridLayout(0,5,1,0));
-		dicePanel.setBackground(Color.GREEN);
+		dicePanel.setBackground(Color.lightGray);
 		
 		for(int i = 0; i < 5; i++) {
 			diceButton[i] = new JButton();
